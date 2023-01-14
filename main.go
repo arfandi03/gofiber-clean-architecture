@@ -11,6 +11,7 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
+	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/recover"
 
 	_ "github.com/joho/godotenv/autoload"
@@ -36,13 +37,13 @@ func main() {
 	app := fiber.New(configuration.NewFiberConfig())
 	app.Use(recover.New())
 	app.Use(cors.New())
-	app.Use(configuration.NewLoggerConfig())
+	app.Use(logger.New(configuration.NewLoggerConfig()))
 
 	//routing
 	api := app.Group("/api/v1")
+	authController.Route(api)
 	api.Use(middleware.JwtCustomStrategy(userRepository))
 	todoController.Route(api)
-	authController.Route(api)
 
 	err := app.Listen(os.Getenv("SERVER_PORT"))
 	exception.PanicLogging(err)

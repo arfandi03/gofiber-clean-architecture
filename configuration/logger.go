@@ -34,6 +34,11 @@ func NewLogger() *logrus.Logger {
 }
 
 func NewLoggerConfig() logger.Config {
+	if _, err := os.Stat("logs"); os.IsNotExist(err) {
+		err := os.Mkdir("logs", 0770)
+		exception.PanicLogging(err)
+	}
+
 	date := time.Now()
 	file, err := os.OpenFile("logs/log_"+date.Format("01-02-2006")+".log", os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0666)
 	exception.PanicLogging(err)

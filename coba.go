@@ -7,6 +7,7 @@ import (
 	"regexp"
 
 	"github.com/go-playground/validator/v10"
+	"golang.org/x/crypto/bcrypt"
 
 	_ "github.com/joho/godotenv/autoload"
 )
@@ -58,6 +59,9 @@ func coba() {
 
 	fmt.Println("ok")
 	fmt.Println(os.Getenv("SERVER_PORT"))
+	hashedPassword, _ := bcrypt.GenerateFromPassword([]byte("usemahu001"), bcrypt.DefaultCost)
+
+	fmt.Println("password", string(hashedPassword))
 	json, err := json.Marshal(u)
 	if err != nil {
 		fmt.Println("error", err)

@@ -3,6 +3,7 @@ package controller
 import (
 	"golang-todo-app/entity"
 	"golang-todo-app/exception"
+	"golang-todo-app/middleware"
 	"golang-todo-app/model"
 	"golang-todo-app/service"
 
@@ -19,7 +20,7 @@ func NewTodoController(todoService *service.TodoService) *TodoController {
 
 func (controller TodoController) Route(api fiber.Router) {
 	todos := api.Group("/todos")
-	todos.Post("/", controller.Create)
+	todos.Post("/", middleware.UserPemission("create_todo"), controller.Create)
 	// todos.Put("/:id", controller.Update)
 	todos.Patch("/:id", controller.UpdateStatus)
 	todos.Delete("/:id", controller.Delete)

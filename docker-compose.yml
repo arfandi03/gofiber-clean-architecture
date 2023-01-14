@@ -39,7 +39,7 @@ services:
       - PMA_HOST=todo-mysql # Note the "todo-mysql". Must be the name of the what you used as the mysql service.
       - PMA_USER=${DATASOURCE_USERNAME}
       - PMA_PORT=${DATASOURCE_PORT}
-      - PMA_PASSWORD=${DB_PASSWORD}
+      - PMA_PASSWORD=${DATASOURCE_PASSWORD}
     ports:
       - 9090:80
     restart: always
