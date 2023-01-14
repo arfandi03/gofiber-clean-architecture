@@ -27,7 +27,7 @@ func (userRepository userRepositoryImpl) Authentication(ctx context.Context, use
 	result := userRepository.DB.WithContext(ctx).
 		Preload("Roles").
 		Preload("Permissions").
-		Where("tb_user.username = ? and tb_user.is_active = ?", username, true).
+		Where("users.username = ? and users.is_active = ?", username, true).
 		Find(&user)
 	if result.RowsAffected == 0 {
 		panic(exception.UnauthorizedError{
